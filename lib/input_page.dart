@@ -3,14 +3,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Icon_content.dart';
 import 'reuseabaleCard.dart';
 
-const bottomContainerColor =Colors.teal ;
+const bottomContainerColor = Colors.teal;
 const activeColor = Color(0xFF11E0CB42);
-const inactiveColor= Color(0xFF122932B3);
-const containerHeight= 80.0;
-enum Gender{
-  male,
-  female
-}
+const inactiveColor = Color(0xFF122932B3);
+const containerHeight = 80.0;
+
+enum Gender { male, female }
 
 class InputPage extends StatefulWidget {
   @override
@@ -18,29 +16,9 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color maleColor= inactiveColor;
-  Color femaleColor= inactiveColor;
+   Gender? selectedGender;
 
-  void changeGenderColor(Gender selectedGender){
-    if(selectedGender == Gender.male){
-      if(maleColor == inactiveColor){
-      maleColor= activeColor;
-      femaleColor= inactiveColor;
-      } else{
-        maleColor = inactiveColor;
-      }
-    }
-    else if(selectedGender == Gender.female){
-      if(femaleColor == inactiveColor){
-        femaleColor= activeColor;
-        maleColor= inactiveColor;
-      } else{
-        femaleColor = inactiveColor;
-      }
-    }
-  }
-
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -48,82 +26,79 @@ class _InputPageState extends State<InputPage> {
         ),
         body: Column(
           children: [
-          Expanded(child: Row(
-            children: [
-              Expanded(
-                child:  GestureDetector(
-                  onTap :(){
-                    setState(() {
-                      changeGenderColor(Gender.male);
-                    });
-                  },
-                child: ReuseableCard(
-                    maleColor,
-                    IconContent(
-                    FontAwesomeIcons.mars,'Male'),
+            Expanded(
+                child: Row(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
+                    },
+                    child: ReuseableCard(
+                      selectedGender == Gender.male
+                          ? activeColor
+                          : inactiveColor,
+                      IconContent(FontAwesomeIcons.mars, 'Male'),
+                    ),
                   ),
                 ),
-
-
-              ),
-              // female Expanded
-              Expanded(child: GestureDetector(
-                onTap: (){
-                  setState(() {
-                    changeGenderColor(Gender.female);
-                  });
-                },
-                child: ReuseableCard
-                  (
-                  femaleColor,
-                  IconContent(
-                    FontAwesomeIcons.venus,
-                    'Female'
-                  )
-
-                  ),
-              )),
-            ],
-          )),
-          Expanded(child:  ReuseableCard(
-
-            activeColor,
-
-              const Column(
-                children: [
-                  Icon(
-                    FontAwesomeIcons.mars,
-                    size: 80,
-                  )
-                ],
-              ))),
-          Expanded(child: Row(
-            children: [
-              Expanded(child:  ReuseableCard(
-                  activeColor,
-                  const Column(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.mars,
-                        size: 80,
-                      )
-                    ],
-                  ))),
-              Expanded(child: ReuseableCard(
-                  activeColor,
-                  const Column(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.mars,
-                        size: 80,
-                      )
-                    ],
-                  )
-              ))
-            ],
-          )),
+                // female Expanded
+                Expanded(
+                    child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedGender = Gender.female;
+                    });
+                  },
+                  child: ReuseableCard(
+                      selectedGender == Gender.female
+                          ? activeColor
+                          : inactiveColor,
+                      IconContent(FontAwesomeIcons.venus, 'Female')),
+                )),
+              ],
+            )),
+            Expanded(
+                child: ReuseableCard(
+                    activeColor,
+                    const Column(
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.mars,
+                          size: 80,
+                        )
+                      ],
+                    ))),
+            Expanded(
+                child: Row(
+              children: [
+                Expanded(
+                    child: ReuseableCard(
+                        activeColor,
+                        const Column(
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.mars,
+                              size: 80,
+                            )
+                          ],
+                        ))),
+                Expanded(
+                    child: ReuseableCard(
+                        activeColor,
+                        const Column(
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.mars,
+                              size: 80,
+                            )
+                          ],
+                        )))
+              ],
+            )),
             Container(
-
               margin: const EdgeInsets.only(top: 10),
               width: double.infinity,
               height: containerHeight,
@@ -132,9 +107,6 @@ class _InputPageState extends State<InputPage> {
               ),
             )
           ],
-        )
-    );
+        ));
   }
 }
-
-
